@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PrimaryBtn from './buttons/PrimaryBtn'
 
-const HeaderBtns = () => {
-    const [btnSelect, setBtnSelect] = useState('CTRL+C Diarios')
+const HeaderBtns = ({ btnSelect, setBtnSelect }) => {
+
 
     const handleClick = (name) => {
         setBtnSelect(name)
