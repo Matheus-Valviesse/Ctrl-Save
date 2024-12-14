@@ -18,7 +18,7 @@ function Modal({ modal, setModal, itemInfo, editLocal }) {
     }, [itemInfo]);
 
     const keyBindings = [
-        { key: 'Selecione', assigned: '' },
+        { key: 'Nenhuma', assigned: '' },
         { key: 'alt+0', assigned: false },
         { key: 'alt+1', assigned: false },
         { key: 'alt+2', assigned: false },

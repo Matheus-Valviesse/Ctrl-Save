@@ -24,16 +24,21 @@ const CopiesSaved = ({ itensSaved, editLocal }) => {
     const [modal, setModal] = useState(false)
     const [itemInfo, setItemInfo] = useState(null)
 
-    return itensSaved?.length > 0 ? (
-        <div className=" rounded-[4px]">
-            <Modal modal={modal} setModal={setModal} itemInfo={itemInfo} editLocal={editLocal} />
-            {itensSaved.map((itemProp, index) => (
-                <Items data={itemProp} index={index} setItemInfo={setItemInfo} setModal={setModal} key={itemProp.itemCopy + index} />
-            ))}
+    return <div>
+        <div className="bg-white rounded-t-[4px] mx-1 my-[6px] p-2  flex items-center">
+            <input className='border-2 border-[#5c5c5c] bg-[#f1f1f1] rounded-md w-full px-2 py-1 text-[14px] font-semibold' />
         </div>
-    ) : (
-        <h1 className="flex items-center justify-center h-full text-center">Nada foi salvo.</h1>
-    )
+        {itensSaved?.length > 0 ? (
+            <div >
+                <Modal modal={modal} setModal={setModal} itemInfo={itemInfo} editLocal={editLocal} />
+                {itensSaved.map((itemProp, index) => (
+                    <Items data={itemProp} index={index} setItemInfo={setItemInfo} setModal={setModal} key={itemProp.itemCopy + index} />
+                ))}
+            </div>
+        ) : (
+            <h1 className="flex items-center justify-center h-full text-center">Nada foi salvo.</h1>
+        )}
+    </div>
 }
 
 export default CopiesSaved

@@ -66,7 +66,7 @@ function App() {
   }, [])
 
   return (
-    <div className=" h-screen bg-[#e6e6e6] flex flex-col">
+    <div className=" h-screen bg-[#d1d1d1] flex flex-col">
       <HeaderBtns btnSelect={btnSelect} setBtnSelect={setBtnSelect} />
       <div className='h-full'>
         {copyPage[btnSelect]}
