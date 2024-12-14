@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import HeaderBtns from './components/HeaderBtns'
-import DailyCopies from './components/items/DailyCopies'
-import CopiesSaved from './components/items/CopiesSaved'
+import DailyCopies from './components/itemsCopy/DailyCopies'
+import CopiesSaved from './components/itemsCopy/CopiesSaved'
 
 function App() {
 
@@ -13,8 +13,21 @@ function App() {
   // Objeto para renderizar os components
   const copyPage = {
     'CTRL+C Diarios': <DailyCopies itensCopy={textCopy} itemSave={saveLocal} />,
-    'CTRL+C Salvos': <CopiesSaved itensSaved={textSaved} />
+    'CTRL+C Salvos': <CopiesSaved itensSaved={textSaved} editLocal={editLocal} />
   }
+
+  const keyBindings = [
+    { key: 'alt+0', assigned: false },
+    { key: 'alt+1', assigned: false },
+    { key: 'alt+2', assigned: false },
+    { key: 'alt+3', assigned: false },
+    { key: 'alt+4', assigned: false },
+    { key: 'alt+5', assigned: false },
+    { key: 'alt+6', assigned: false },
+    { key: 'alt+7', assigned: false },
+    { key: 'alt+8', assigned: false },
+    { key: 'alt+9', assigned: false }
+  ];
 
   // função para receber os dados salvos
   function getLocal() {
@@ -28,9 +41,21 @@ function App() {
   }
 
   function saveLocal(item) {
-    const newArr = [...textSaved, { itemCopy: item, tag: '' }]
+    const newArr = [...textSaved, { itemCopy: item, tag: '', shortcut: '' }]
     setTextSaved(newArr)
     localStorage.setItem('copySaved', JSON.stringify(newArr))
+  }
+
+  function editLocal(i, item) {
+
+    if (textSaved[i]) {
+
+      textSaved[i].itemCopy = item.itemCopy
+      textSaved[i].tag = item.tag
+      textSaved[i].shortcut = item.shortcut
+    }
+
+    localStorage.setItem('copySaved', JSON.stringify(textSaved))
   }
 
   useEffect(() => {

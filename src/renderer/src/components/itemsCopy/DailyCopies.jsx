@@ -1,11 +1,12 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { FaRegFloppyDisk } from 'react-icons/fa6'
 
 const Items = ({ data, itemSave }) => {
     return (
-        <div className="bg-white rounded-[4px] m-1 px-4 py-2 flex justify-between items-center">
-            <p className="text-[12px] font-bold mr-1">{data}</p>
-            <button onClick={() => itemSave(data)} className="bg-white rounded-full p-[4px]">
+        <div className="bg-white rounded-[4px] m-1 p-2 gap-x-[2px] flex justify-stretch items-center">
+            <p className="text-[12px] font-bold mr-1 w-full line-clamp-3 overflow-ellipsis" >{data}</p>
+            <button onClick={() => itemSave(data)} className="bg-white rounded-full p-[4px] w-1/8">
                 <FaRegFloppyDisk className="text-black text-[20px] font-bold" />
             </button>
         </div>
