@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 
-import { app, shell, BrowserWindow, ipcMain, clipboard } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, clipboard, globalShortcut } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -28,6 +28,7 @@ function createWindow() {
   let lastClipboardContent = ''
   clipboard.clear()
 
+
   // Monitorando a área de transferência a cada 1 segundo
   setInterval(() => {
     const currentClipboardContent = clipboard.readText() // Lê o conteúdo da área de transferência
@@ -41,6 +42,19 @@ function createWindow() {
       mainWindow.webContents.send('copy-text', currentClipboardContent)
     }
   }, 300) // Intervalo de 1 segundo (ajuste conforme necessário)
+
+  for (let i = 0; i <= 9; i++) {
+    const key = `alt+${i}`;
+    const success = globalShortcut.register(key, () => {
+      mainWindow.webContents.send('copy-by-path', key)
+    });
+
+    if (!success) {
+      console.error(`Falha ao registrar o atalho ${key}`);
+    }
+  }
+
+  console.log('Atalhos registrados. Pressione Alt+0 a Alt+9.');
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)

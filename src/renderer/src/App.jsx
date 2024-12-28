@@ -7,7 +7,7 @@ function App() {
 
   const [textCopy, setTextCopy] = useState([])
   const [textSaved, setTextSaved] = useState(getLocal())
-
+  const [keysSaved, setKeysSaved] = useState(getKeys())
   const [btnSelect, setBtnSelect] = useState('CTRL+C Diarios')
 
   // Objeto para renderizar os components
@@ -15,19 +15,6 @@ function App() {
     'CTRL+C Diarios': <DailyCopies itensCopy={textCopy} itemSave={saveLocal} />,
     'CTRL+C Salvos': <CopiesSaved itensSaved={textSaved} editLocal={editLocal} />
   }
-
-  const keyBindings = [
-    { key: 'alt+0', assigned: false },
-    { key: 'alt+1', assigned: false },
-    { key: 'alt+2', assigned: false },
-    { key: 'alt+3', assigned: false },
-    { key: 'alt+4', assigned: false },
-    { key: 'alt+5', assigned: false },
-    { key: 'alt+6', assigned: false },
-    { key: 'alt+7', assigned: false },
-    { key: 'alt+8', assigned: false },
-    { key: 'alt+9', assigned: false }
-  ];
 
   // função para receber os dados salvos
   function getLocal() {
@@ -37,6 +24,26 @@ function App() {
       return []
     } else {
       return arr
+    }
+  }
+
+  function getKeys() {
+    const arr = JSON.parse(localStorage.getItem('keySaved'))
+
+    if (arr === null) {
+      return [
+
+        { key: 'alt+1', assigned: false },
+        { key: 'alt+2', assigned: false },
+        { key: 'alt+3', assigned: false },
+        { key: 'alt+4', assigned: false },
+        { key: 'alt+5', assigned: false },
+        { key: 'alt+6', assigned: false },
+        { key: 'alt+7', assigned: false },
+        { key: 'alt+8', assigned: false },
+        { key: 'alt+9', assigned: false },
+        { key: 'alt+0', assigned: false }
+      ];
     }
   }
 
@@ -62,6 +69,15 @@ function App() {
     // Escutando a mensagem exposta pelo preload
     window?.electronAPI?.onTextCopy((event, message) => {
       setTextCopy((prevTextCopy) => [...prevTextCopy, message]) // Exibe a mensagem do backend no console do frontend
+    })
+
+    window?.electronAPI?.oncopyByPath((event, message) => {
+
+      const i = textSaved.findIndex(item => item.shortcut == message)
+
+      if (i != -1) {
+        window?.electronAPI.sendCopy("data-copy", { text: textSaved[i].itemCopy })
+      }
     })
   }, [])
 

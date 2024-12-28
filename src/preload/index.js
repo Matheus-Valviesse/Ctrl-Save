@@ -8,8 +8,18 @@ const api = {
 }
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  onTextCopy: (callback) => ipcRenderer.on('copy-text', callback)
+  onTextCopy: (callback) => ipcRenderer.on('copy-text', callback),
+  oncopyByPath: (callback) => ipcRenderer.on('copy-by-path', callback),
+
+  sendCopy: (channel, data) => {
+    const validChannels = ["data-copy"]; // Valide os canais permitidos
+    if (validChannels.includes(channel)) {
+      ipcRenderer.send(channel, data);
+    }
+  },
 })
+
+
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise

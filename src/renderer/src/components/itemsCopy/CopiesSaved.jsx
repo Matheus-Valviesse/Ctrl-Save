@@ -48,7 +48,7 @@ const CopiesSaved = ({ itensSaved, editLocal }) => {
                     className="border-2 border-[#5c5c5c] focus:outline focus:outline-0 focus:border-[#8ee786] rounded-md w-full px-2 py-1 text-[14px] font-normal"
                     placeholder="Digite pelo texto ou tag"
                     value={inputSearch}
-                    onChange={(e) => setInputSearch(e.target.value)}
+                    onChange={(e) => { setInputSearch(e.target.value) }}
                 />
             </div>
 
