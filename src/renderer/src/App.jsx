@@ -71,8 +71,8 @@ function App() {
       setTextCopy((prevTextCopy) => [...prevTextCopy, message]) // Exibe a mensagem do backend no console do frontend
     })
 
-    window?.electronAPI?.oncopyByPath((event, message) => {
-
+    window?.electronAPI?.onCopyByPath((event, message) => {
+      console.log('qui')
       const i = textSaved.findIndex(item => item.shortcut == message)
 
       if (i != -1) {

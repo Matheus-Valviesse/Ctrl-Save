@@ -9,10 +9,12 @@ const api = {
 
 contextBridge.exposeInMainWorld('electronAPI', {
   onTextCopy: (callback) => ipcRenderer.on('copy-text', callback),
-  oncopyByPath: (callback) => ipcRenderer.on('copy-by-path', callback),
+  onCopyByPath: (callback) => ipcRenderer.on('copy-by-path', callback),
 
   sendCopy: (channel, data) => {
-    const validChannels = ["data-copy"]; // Valide os canais permitidos
+
+    const validChannels = ["data-copy"];
+
     if (validChannels.includes(channel)) {
       ipcRenderer.send(channel, data);
     }
