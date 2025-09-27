@@ -10,7 +10,7 @@ const HeaderBtns = ({ btnSelect, setBtnSelect }) => {
     }
 
     return (
-        <div className='flex flex-row h-10 '>
+        <div className='flex flex-row h-10 max-h-fit '>
             <PrimaryBtn selected={btnSelect} name={'CTRL+C Diarios'} onClick={handleClick} />
             <PrimaryBtn selected={btnSelect} name={'CTRL+C Salvos'} onClick={handleClick} />
         </div>

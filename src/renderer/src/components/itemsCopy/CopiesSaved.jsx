@@ -1,15 +1,18 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import Modal from '../modal/ModalEdit';
+import ModalDelete from '../modal/ModalDelete';
 
 import { RiEdit2Fill } from 'react-icons/ri';
 import { BsFillClipboard2Fill } from "react-icons/bs";
+import { IoClose } from "react-icons/io5";
 
 
-const Items = ({ data, index, setItemInfo, setModal }) => {
-    console.log(data?.shortcut)
+
+const Items = ({ data, index, setItemInfo, setModal, setModalDelete }) => {
+
     return (
-        <div className="bg-white rounded-[4px] mx-1 my-[6px] p-2 flex justify-stretch gap-[2px] items-center">
+        <div className="bg-white rounded-[4px] mx-1 my-[6px] px-2 py-1 flex justify-stretch gap-[2px] items-center">
             {data?.shortcut !== "" ? <div className='mr-[2px] relative flex justify-center'>
                 <BsFillClipboard2Fill className='text-black  text-[20px]' />
                 <p className='font-semibold text-[12px] text-[#baf1b5] absolute mt-[2px]'>{data.shortcut.replace("alt+", "")}</p>
@@ -19,36 +22,50 @@ const Items = ({ data, index, setItemInfo, setModal }) => {
                 {data?.itemCopy}
             </p>
 
-            <div className="flex flex-row items-center w-1/3 ">
+            <div className="flex flex-col items-center w-1/4 ">
 
-                <p className="text-[10px] font-bold bg-[#baf1b5] px-[4px] py-[2px] rounded-sm w-[52px] line-clamp-1 text-center overflow-ellipsis">
+                <div className='flex flex-row w-full justify-between px-[1px]'>
+                    <button
+                        onClick={() => {
+                            setItemInfo({ i: index, data });
+                            setModal(true);
+                        }}
+                        className="bg-white rounded-full "
+                    >
+                        <RiEdit2Fill className="text-black text-[20px] font-bold duration-150 bg-white hover:text-white hover:bg-black rounded-sm p-[2px]" />
+                    </button>
+
+                    <button
+                        onClick={() => {
+                            setItemInfo({ i: index, data });
+                            setModalDelete(true);
+                        }}>
+                        <IoClose className="text-black duration-150 bg-white hover:text-white hover:bg-red-500 text-[20px] font-bold rounded-sm" />
+                    </button>
+
+
+                </div>
+                <p className="text-[10px] font-bold bg-[#baf1b5] px-[4px] py-[1px] rounded-sm w-[52px] line-clamp-1 text-center overflow-ellipsis">
                     {data?.tag || '-'}
                 </p>
 
-                <button
-                    onClick={() => {
-                        setItemInfo({ i: index, data });
-                        setModal(true);
-                    }}
-                    className="bg-white rounded-full p-[4px]"
-                >
-                    <RiEdit2Fill className="text-black text-[18px] font-bold" />
-                </button>
             </div>
+
         </div>
     );
 };
 
-const CopiesSaved = ({ itensSaved, editLocal }) => {
+const CopiesSaved = ({ itensSaved, editLocal, deleteLocal }) => {
     const [modal, setModal] = useState(false);
+    const [modalDelete, setModalDelete] = useState(false);
     const [itemInfo, setItemInfo] = useState(null);
     const [inputSearch, setInputSearch] = useState('');
 
     // Filtrar itens com base no input
     const filteredItems = itensSaved?.filter(
         (item) =>
-            item.itemCopy.toLowerCase().includes(inputSearch.toLowerCase()) ||
-            (item.tag && item.tag.toLowerCase().includes(inputSearch.toLowerCase()))
+            item?.itemCopy.toLowerCase().includes(inputSearch.toLowerCase()) ||
+            (item?.tag && item.tag.toLowerCase().includes(inputSearch.toLowerCase()))
     );
 
     return (
@@ -66,6 +83,8 @@ const CopiesSaved = ({ itensSaved, editLocal }) => {
                 <div>
                     <Modal modal={modal} setModal={setModal} itemInfo={itemInfo} editLocal={editLocal} />
 
+                    <ModalDelete modal={modalDelete} setModal={setModalDelete} itemInfo={itemInfo} deleteLocal={deleteLocal} />
+
                     {filteredItems.length > 0 ? (
                         filteredItems.map((itemProp, index) => (
                             <Items
@@ -73,6 +92,7 @@ const CopiesSaved = ({ itensSaved, editLocal }) => {
                                 index={index}
                                 setItemInfo={setItemInfo}
                                 setModal={setModal}
+                                setModalDelete={setModalDelete}
                                 key={`${itemProp.itemCopy}-${index}`}
                             />
                         ))

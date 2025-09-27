@@ -35,7 +35,7 @@ function Modal({ modal, setModal, itemInfo, editLocal }) {
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 ">
-            <div className="bg-white w-[280px]  rounded shadow-lg px-4 py-2 flex flex-col gap-2 relative">
+            <div className="bg-white w-[270px]  rounded shadow-lg px-4 py-4 flex flex-col gap-2 relative">
                 <div className=' flex  absolute top-0 right-0 mr-2 mt-2'>
                     <button onClick={() => setModal(false)}>
                         <IoCloseSharp className="text-black text-[24px] font-bold" />
@@ -47,7 +47,7 @@ function Modal({ modal, setModal, itemInfo, editLocal }) {
                     <textarea
                         value={copyValue}
                         onChange={(e) => setCopyValue(e.target.value)}
-                        className="border-2 rounded-md w-full h-[100px] px-2 py-1 resize-none"
+                        className="border-2 rounded-md w-full h-[100px] px-2 py-1 resize-none bg-[#fafafa]"
                         style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}
                     />
                 </label>
@@ -70,15 +70,15 @@ function Modal({ modal, setModal, itemInfo, editLocal }) {
                             onChange={(e) => setSelectedKey(e.target.value)}
                         >
                             {keyBindings.filter(key => !key.assigned).map(key => (
-                                <option key={key.key} value={key.key}>
+                                <option key={key.key} value={key.key == 'Nenhuma' ? "" : key.key}>
                                     {key.key}
                                 </option>
                             ))}
                         </select>
                     </label>
                 </div>
-                <div className='mt-4'>
-                    <button onClick={() => { editLocal(itemInfo.i, { itemCopy: copyValue, tag: tagValue, shortcut: selectedKey }), setModal(false) }}>salvar</button>
+                <div className='mt-4 w-full flex items-center justify-center'>
+                    <button className='bg-black text-white rounded-md px-4 py-[0.2rem] text-[18px]' onClick={() => { editLocal(itemInfo.i, { itemCopy: copyValue, tag: tagValue, shortcut: selectedKey }), setModal(false) }}>salvar</button>
                 </div>
             </div>
         </div>

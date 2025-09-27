@@ -19,5 +19,11 @@ export default defineConfig({
       }
     },
     plugins: [react()]
-  }
+  },
+  resolve: {
+    alias: {
+      "@mocks": "/src/mocks",
+    },
+  },
+
 })

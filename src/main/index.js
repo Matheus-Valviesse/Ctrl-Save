@@ -13,10 +13,13 @@ const keyboardListener = new GlobalKeyboardListener();
 function createWindow() {
   // Configurações da janela do navegador
   const mainWindow = new BrowserWindow({
-    width: 350,
+    width: 300,
     height: 600,
     show: false,
     autoHideMenuBar: true,
+    resizable: false, // 🚫 Não permite aumentar/diminuir pelas bordas
+    fullscreenable: false, // 🚫 Não permite fullscreen (opcional)
+    maximizable: false,    // 🚫 Não permite maximizar (opcional)
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'), // Carrega o script preload

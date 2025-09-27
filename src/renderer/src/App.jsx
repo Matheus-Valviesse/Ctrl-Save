@@ -13,18 +13,7 @@ function App() {
   // Objeto para renderizar os components
   const copyPage = {
     'CTRL+C Diarios': <DailyCopies itensCopy={textCopy} itemSave={saveLocal} />,
-    'CTRL+C Salvos': <CopiesSaved itensSaved={textSaved} editLocal={editLocal} />
-  }
-
-  // função para receber os dados salvos
-  function getLocal() {
-    const arr = JSON.parse(localStorage.getItem('copySaved'))
-
-    if (arr === null) {
-      return []
-    } else {
-      return arr
-    }
+    'CTRL+C Salvos': <CopiesSaved itensSaved={textSaved} editLocal={editLocal} deleteLocal={deleteLocal} />
   }
 
   function getKeys() {
@@ -32,7 +21,6 @@ function App() {
 
     if (arr === null) {
       return [
-
         { key: 'alt+1', assigned: false },
         { key: 'alt+2', assigned: false },
         { key: 'alt+3', assigned: false },
@@ -47,6 +35,17 @@ function App() {
     }
   }
 
+  // função para receber os dados salvos
+  function getLocal() {
+    const arr = JSON.parse(localStorage.getItem('copySaved'))
+
+    if (arr === null) {
+      return []
+    } else {
+      return arr
+    }
+  }
+
   function saveLocal(item) {
     const newArr = [...textSaved, { itemCopy: item, tag: '', shortcut: '' }]
     setTextSaved(newArr)
@@ -57,12 +56,37 @@ function App() {
 
     if (textSaved[i]) {
 
-      textSaved[i].itemCopy = item.itemCopy
-      textSaved[i].tag = item.tag
-      textSaved[i].shortcut = item.shortcut
+      const updatedArr = [...textSaved];
+
+      // Atualiza o array, limpando o atalho correspondente
+      updatedArr.forEach((itemSaved) => {
+        if (itemSaved.shortcut === item.shortcut) {
+          itemSaved.shortcut = ""; // Limpa o atalho
+        }
+      });
+
+      updatedArr[i] = {
+        ...updatedArr[i], // Garante que você está atualizando apenas o índice correto
+        itemCopy: item.itemCopy,
+        tag: item.tag,
+        shortcut: item.shortcut,
+      };
+
+      setTextSaved(updatedArr)
+      localStorage.setItem('copySaved', JSON.stringify(updatedArr))
     }
 
-    localStorage.setItem('copySaved', JSON.stringify(textSaved))
+  }
+
+  function deleteLocal(i) {
+    console.log(i)
+    if (i < 0 || i >= textSaved.length) return console.log('item invalido'); // índice inválido
+
+    const updatedArr = textSaved.filter((_, index) => index !== i);
+
+    setTextSaved(updatedArr);
+    localStorage.setItem('copySaved', JSON.stringify(updatedArr));
+
   }
 
   useEffect(() => {
@@ -72,11 +96,13 @@ function App() {
     })
 
     window?.electronAPI?.onCopyByPath((event, message) => {
-      console.log('qui')
-      const i = textSaved.findIndex(item => item.shortcut == message)
 
+      const i = textSaved.findIndex(item => item.shortcut == message)
+      console.log(message)
+      console.log(i)
       if (i != -1) {
         window?.electronAPI.sendCopy("data-copy", { text: textSaved[i].itemCopy })
+        console.log(textSaved[i].itemCopy)
       }
     })
   }, [])
@@ -84,7 +110,7 @@ function App() {
   return (
     <div className=" h-screen bg-[#d1d1d1] flex flex-col">
       <HeaderBtns btnSelect={btnSelect} setBtnSelect={setBtnSelect} />
-      <div className='h-full'>
+      <div className='h-full overflow-y-auto'>
         {copyPage[btnSelect]}
       </div>
 
