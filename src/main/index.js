@@ -5,6 +5,12 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { GlobalKeyboardListener } from 'node-global-key-listener'
+import { getCopies, addCopy, editCopy, deleteCopy } from "../data/db.js";
+
+ipcMain.handle("get-copies", () => getCopies());
+ipcMain.handle("add-copy", (_, item) => addCopy(item));
+ipcMain.handle("edit-copy", (_, { id, updated }) => editCopy(id, updated));
+ipcMain.handle("delete-copy", (_, id) => deleteCopy(id));
 
 // Instância do listener global de teclado
 const keyboardListener = new GlobalKeyboardListener();

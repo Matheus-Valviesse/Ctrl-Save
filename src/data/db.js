@@ -1,43 +1,48 @@
 import fs from "fs";
-import path from "path";
 
-const dbPath = path.join(__dirname, "db.json");
+const dbPath = "./db.json";
 
-// Ler o JSON
-export function readDB() {
-  if (!fs.existsSync(dbPath)) return { copies: [] };
-  const raw = fs.readFileSync(dbPath, "utf-8");
-  return JSON.parse(raw);
+export async function readDB() {
+  if (!fs.existsSync(dbPath)) {
+    const initialData = { copies: [] };
+    fs.writeFileSync(dbPath, JSON.stringify(initialData, null, 2));
+    return initialData;
+  }
+  try {
+    const raw = fs.readFileSync(dbPath, "utf-8");
+    return JSON.parse(raw);
+  } catch (error) {
+    console.error("Erro ao ler o JSON:", error);
+    return { copies: [] };
+  }
 }
 
-// Escrever no JSON
 export function writeDB(data) {
   fs.writeFileSync(dbPath, JSON.stringify(data, null, 2));
 }
 
-// Funções CRUD
-export function getCopies() {
-  const db = readDB();
+export async function getCopies() {
+  const db = await readDB();
   return db.copies;
 }
 
-export function addCopy(item) {
-  const db = readDB();
-  const newItem = { id: Date.now(), ...item };
+export async function addCopy(item) {
+  const db = await readDB();  // <-- usar await aqui
+  const newItem = { id: Date.now(), itemCopy: item, tag: '', shortcut: '' };
   db.copies.push(newItem);
   writeDB(db);
   return newItem;
 }
 
-export function editCopy(id, updatedItem) {
-  const db = readDB();
+export async function editCopy(id, updatedItem) {
+  const db = await readDB();  // <-- usar await aqui
   db.copies = db.copies.map(c => c.id === id ? { ...c, ...updatedItem } : c);
   writeDB(db);
-  return db.copies.find(c => c.id === id);
+  return { success: true };
 }
 
-export function deleteCopy(id) {
-  const db = readDB();
+export async function deleteCopy(id) {
+  const db = await readDB();  // <-- usar await aqui
   db.copies = db.copies.filter(c => c.id !== id);
   writeDB(db);
   return { success: true };

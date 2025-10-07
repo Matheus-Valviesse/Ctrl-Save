@@ -1,9 +1,11 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { IoCloseSharp } from "react-icons/io5";
 
 const ModalDelete = ({ modal, setModal, itemInfo, deleteLocal }) => {
+
   if (modal === false) return null;
-  console.log(itemInfo)
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 ">
 

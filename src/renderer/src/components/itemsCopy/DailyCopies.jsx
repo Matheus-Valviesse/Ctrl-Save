@@ -2,6 +2,7 @@
 import React from 'react'
 import { FaRegFloppyDisk } from 'react-icons/fa6'
 
+
 const Items = ({ data, itemSave }) => {
     return (
         <div className="bg-white rounded-[4px] m-1 p-2 gap-x-[2px] flex justify-stretch items-center">
