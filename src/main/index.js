@@ -6,6 +6,7 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { GlobalKeyboardListener } from 'node-global-key-listener'
 import { getCopies, addCopy, editCopy, deleteCopy } from "../data/db.js";
+import { registerNotificationIPC } from './notification.js'
 
 ipcMain.handle("get-copies", () => getCopies());
 ipcMain.handle("add-copy", (_, item) => addCopy(item));
@@ -14,11 +15,11 @@ ipcMain.handle("delete-copy", (_, id) => deleteCopy(id));
 
 // Instância do listener global de teclado
 const keyboardListener = new GlobalKeyboardListener();
-
+let mainWindow
 // Função para criar a janela principal do aplicativo
 function createWindow() {
   // Configurações da janela do navegador
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 300,
     height: 600,
     show: false,
@@ -108,6 +109,7 @@ app.whenReady().then(() => {
 
   // Cria a janela principal
   createWindow();
+  registerNotificationIPC();
 
   // No macOS, recria a janela quando o ícone do dock é clicado
   app.on('activate', function () {
@@ -128,7 +130,25 @@ ipcMain.handle('get-data', async (event, args) => {
   return { dados: 'Aqui está a resposta do backend!' }; // Retorna dados simulados
 });
 
-// Manipulador para copiar texto enviado do renderer para a área de transferência
-ipcMain.on('data-copy', async (event, args) => {
-  if (args.text) clipboard.writeText(args.text); // Copia o texto para a área de transferência
+ipcMain.on('data-copy', (event, args) => {
+  console.log(args);
+
+  if (!args.text) return;
+
+  // Copia para a área de transferência
+  clipboard.writeText(args.text);
+
+  // Envia para o renderer, se a janela existir
+  if (args.text) {
+    mainWindow.webContents.send('update-data', args.text);
+    // Envia para todas as janelas abertas
+    BrowserWindow.getAllWindows().forEach(win => {
+      win.webContents.send('update-data', args.text);
+    });
+    console.log('=========');
+    console.log('aqui');
+    console.log('=========');
+  }
+
+
 });

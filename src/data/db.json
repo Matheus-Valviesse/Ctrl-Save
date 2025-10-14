@@ -1,7 +1,16 @@
 {
   "copies": [
     {
-      "test": 1
+      "id": 1759525789831,
+      "itemCopy": "ada foi copi",
+      "tag": "curriculo",
+      "shortcut": "alt+2"
+    },
+    {
+      "id": 1759526058887,
+      "itemCopy": "Nada foi salvo.",
+      "tag": "sasa",
+      "shortcut": "alt+0"
     }
   ]
 }

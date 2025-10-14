@@ -13,6 +13,14 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()]
   },
   renderer: {
+    build: {
+      rollupOptions: {
+        input: {
+          browser: resolve(__dirname, 'src/renderer/index.html'),
+          webview: resolve(__dirname, 'src/renderer/notifi.html')
+        }
+      }
+    },
     resolve: {
       alias: {
         '@renderer': resolve('src/renderer/src')

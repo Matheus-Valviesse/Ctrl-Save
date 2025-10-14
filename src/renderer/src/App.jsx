@@ -14,10 +14,18 @@ function App() {
     'CTRL+C Salvos': <CopiesSaved itensSaved={textSaved} editLocal={editLocal} deleteLocal={deleteLocal} />
   }
 
+  async function callShowMessage() {
+    await window.electronAPI.showMessage()
+  }
+
+  async function loadData() {
+    const arr = await window.electronAPI.getCopies();
+    return arr
+  }
+
   async function loadCopies() {
     try {
       const arr = await window.electronAPI.getCopies();
-      console.log('getLocal arr:', arr);
       setTextSaved(Array.isArray(arr) ? arr : []);
     } catch (error) {
       console.error('Erro em getLocal:', error);
@@ -40,7 +48,9 @@ function App() {
     deleteItem.success ? loadCopies() : null;
   }
 
+
   useEffect(() => {
+    callShowMessage()
     loadCopies(); // carrega os dados quando o componente montar
 
     // Escutando eventos vindos do preload
@@ -48,13 +58,24 @@ function App() {
       setTextCopy((prevTextCopy) => [...prevTextCopy, message])
     })
 
+
+  }, [])
+
+  if (textSaved.length > 0) {
     window?.electronAPI?.onCopyByPath((event, message) => {
-      const i = textSaved.findIndex(item => item.shortcut == message)
+      const data = textSaved
+      console.log(data)
+      const i = data.findIndex(item => item.shortcut == message)
+
+      console.log(i)
       if (i !== -1) {
         window?.electronAPI.sendCopy("data-copy", { text: textSaved[i].itemCopy })
       }
     })
-  }, [])
+  }
+
+
+
 
   return (
     <div className="h-screen bg-[#d1d1d1] flex flex-col">

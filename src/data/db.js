@@ -1,6 +1,5 @@
 import fs from "fs";
-
-const dbPath = "./db.json";
+const dbPath = "src/data/db.json"
 
 export async function readDB() {
   if (!fs.existsSync(dbPath)) {
@@ -36,6 +35,10 @@ export async function addCopy(item) {
 
 export async function editCopy(id, updatedItem) {
   const db = await readDB();  // <-- usar await aqui
+  const existItem = db.copies.findIndex(
+    item => item.itemCopy !== updatedItem.itemCopy && item.shortcut === updatedItem.shortcut
+  );
+  if (existItem !== -1) db.copies[existItem].shortcut = ""
   db.copies = db.copies.map(c => c.id === id ? { ...c, ...updatedItem } : c);
   writeDB(db);
   return { success: true };
