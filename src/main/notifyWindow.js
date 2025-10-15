@@ -19,7 +19,7 @@ export function showNotification() {
 
   notificationWindow = new BrowserWindow({
     width: 380,
-    height: 310,
+    height: 210,
     x: width - 380, // Canto superior direito
     y: 20,
     frame: false,
