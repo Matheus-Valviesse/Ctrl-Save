@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from 'react'
 import { IoCopySharp } from "react-icons/io5";
 import { motion, useAnimation } from "framer-motion"
+import ReactDOM from "react-dom";
 
 const NotifiMessage = () => {
   const animControl = useAnimation()
   const boxControl = useAnimation()
   const textControl = useAnimation()
+  const divControl = useAnimation()
   const textRef = useRef(null) // referência direta para o <p>
 
   let currentText = null // variável para comparar o texto atual
@@ -29,15 +31,17 @@ const NotifiMessage = () => {
   }
 
   const openAnimationNotifi = async () => {
-
     boxControl.stop()
+    divControl.start({ width: 380, transition: { duration: 0.75, ease: "easeInOut" } })
     await boxControl.set({ x: 380 })
     await boxControl.start({
       x: 0,
       transition: { duration: 0.75, ease: "easeInOut" },
     })
   }
+
   const openAnimationNotifiReset = async () => {
+    divControl.start({ width: 380, transition: { duration: 0.75, ease: "easeInOut" } })
     await boxControl.start({
       x: 0,
       transition: { duration: 0.25, ease: "easeInOut" },
@@ -46,6 +50,7 @@ const NotifiMessage = () => {
 
   const closeAnimationNotifi = async () => {
     boxControl.stop()
+    divControl.start({ width: 0, transition: { duration: 0.75, ease: "easeInOut" } })
     await boxControl.start({
       x: 380,
       transition: { duration: 0.75, ease: "easeInOut" },
@@ -68,7 +73,7 @@ const NotifiMessage = () => {
   const handleUpdate = async (dados) => {
     if (currentText) {
       if (dados === currentText) {
-        // mesmo texto: só reinicia a barra
+
         await openAnimationNotifiReset()
         await resetAnimationBar()
         await startAnimationBar()
@@ -97,28 +102,29 @@ const NotifiMessage = () => {
     window?.electronAPI?.onUpdateData((dados) => handleUpdate(dados))
   }, [])
 
-  return (
-    <div className='overflow-x-hidden relative scrollbar-none h-[110px] flex flex-col'>
-      <motion.div
-        animate={boxControl}
-        className='border-r-0 bg-[#000] p-4 text-white absolute flex flex-col gap-2 overflow-hidden translate-x-[380px] w-full h-full scrollbar-none'
-      >
-        <h3 className='flex flex-row items-center gap-1 font-medium text-[16px]'>
-          <IoCopySharp /> texto copiado
-        </h3>
-
-        <motion.p
-          ref={textRef} // referência direta para alterar o texto
-          animate={textControl}
-          className='text-[#c7c7c7] text-[14px] font-extralight line-clamp-2'
-        ></motion.p>
-
+  return ReactDOM.createPortal(
+    (
+      <motion.div animate={divControl} style={{ width: 0, originX: 1 }} className='overflow-x-hidden  scrollbar-none h-[110px] flex flex-col bg-[#ef17173e] absolute right-0'>
         <motion.div
-          animate={animControl}
-          className='absolute bg-green-500 w-full h-1 bottom-0 right-0 self-end scale-x-1 origin-right'
-        ></motion.div>
-      </motion.div>
-    </div>
+          animate={boxControl}
+          className='border-r-0 bg-[#000] p-4 text-white absolute flex flex-col gap-2 overflow-hidden translate-x-[380px] w-full h-full scrollbar-none'
+        >
+          <h3 className='flex flex-row items-center gap-1 font-medium text-[16px]'>
+            <IoCopySharp /> texto copiado
+          </h3>
+
+          <motion.p
+            ref={textRef} // referência direta para alterar o texto
+            animate={textControl}
+            className='text-[#c7c7c7] text-[14px] font-extralight line-clamp-2'
+          ></motion.p>
+
+          <motion.div
+            animate={animControl}
+            className='absolute bg-green-500 w-full h-1 bottom-0 right-0 self-end scale-x-1 origin-right'
+          ></motion.div>
+        </motion.div>
+      </motion.div>), document.body
   )
 }
 

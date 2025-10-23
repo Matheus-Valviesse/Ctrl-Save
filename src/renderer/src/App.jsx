@@ -14,15 +14,6 @@ function App() {
     'CTRL+C Salvos': <CopiesSaved itensSaved={textSaved} editLocal={editLocal} deleteLocal={deleteLocal} />
   }
 
-  async function callShowMessage() {
-    await window.electronAPI.showMessage()
-  }
-
-  async function loadData() {
-    const arr = await window.electronAPI.getCopies();
-    return arr
-  }
-
   async function loadCopies() {
     try {
       const arr = await window.electronAPI.getCopies();
@@ -34,8 +25,14 @@ function App() {
   }
 
   async function saveLocal(item) {
+    console.log(item)
     const newItem = await window.electronAPI.addCopy(item);
     setTextSaved(prev => [...prev, newItem]); // atualiza o state no React
+    const copyExist = textCopy.findIndex(i => i === item)
+    if (copyExist > -1) {
+      setTextCopy(textCopy.filter(data => data !== item))
+    }
+
   }
 
   async function editLocal(i, item) {
@@ -50,7 +47,7 @@ function App() {
 
 
   useEffect(() => {
-    callShowMessage()
+
     loadCopies(); // carrega os dados quando o componente montar
 
     // Escutando eventos vindos do preload

@@ -5,64 +5,56 @@ import { fileURLToPath } from 'url'
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
-let notificationWindow = null
+let notificationWindow = null;
 
 export function showNotification() {
-  const display = screen.getPrimaryDisplay()
-  const { width } = display.workAreaSize
+  const display = screen.getPrimaryDisplay();
+  const { width } = display.workAreaSize;
 
-  // Fecha janela antiga se existir
-  if (notificationWindow) {
-    notificationWindow.close()
-    notificationWindow = null
+  // Se a janela já existe e não foi fechada
+  if (notificationWindow && !notificationWindow.isDestroyed()) {
+    notificationWindow.showInactive(); // mostra sem focar
+    return notificationWindow;
   }
 
+  // Cria a janela
   notificationWindow = new BrowserWindow({
     width: 380,
-    height: 210,
-    x: width - 380, // Canto superior direito
-    y: 20,
+    height: 110,
+    x: width - 380,
+    y: 100,
     frame: false,
-    roundedCorners: false,
     transparent: true,
     alwaysOnTop: true,
     resizable: false,
-    skipTaskbar: true, // Não aparece na taskbar
+    skipTaskbar: true,
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'), // Correto: de src/main/ para src/preload/
-      nodeIntegration: false, // Explícito para segurança
-      contextIsolation: true // Isolado
+      preload: join(__dirname, '../preload/index.js'),
+      nodeIntegration: false,
+      contextIsolation: true
     }
-  })
+  });
 
-  // Caminho adaptado para dev/prod - CORRIGIDO
-  let loadPath
-  if (process.env.NODE_ENV === 'development') {
-    loadPath = 'http://localhost:5173/notifi.html' // Vite dev server (raiz renderer)
-    notificationWindow.loadURL(loadPath).then(() => {
-      notificationWindow.showInactive()
-      // Opcional: DevTools só em dev
-      if (process.env.NODE_ENV === 'development') {
-        notificationWindow.webContents.openDevTools({ mode: 'detach' })
-      }
-    }).catch(err => {
-      console.error('Erro ao carregar notificação em dev:', err)
-      notificationWindow.close() // Fecha se falhar
-    })
-  } else {
-    loadPath = join(__dirname, '../renderer/notifi.html') // CORRIGIDO: de src/main/ para src/renderer/
-    notificationWindow.loadFile(loadPath).then(() => {
-      notificationWindow.showInactive()
-    }).catch(err => {
-      console.error('Erro ao carregar notificação em prod:', err)
-      notificationWindow.close()
-    })
-  }
+  // Carrega HTML
+  const loadPath = process.env.NODE_ENV === 'development'
+    ? 'http://localhost:5173/notifi.html'
+    : join(__dirname, '../renderer/notifi.html');
 
+  const loader = process.env.NODE_ENV === 'development'
+    ? notificationWindow.loadURL(loadPath)
+    : notificationWindow.loadFile(loadPath);
 
+  loader.then(() => notificationWindow.showInactive())
+    .catch(err => {
+      console.error('Erro ao carregar notificação:', err);
+      notificationWindow.close();
+      notificationWindow = null;
+    });
 
-  // Evento para limpar referência quando fechada manualmente
+  // Limpa referência quando fechar
   notificationWindow.on('closed', () => {
-    notificationWindow = null
-  })
+    notificationWindow = null;
+  });
+
+  return notificationWindow;
 }

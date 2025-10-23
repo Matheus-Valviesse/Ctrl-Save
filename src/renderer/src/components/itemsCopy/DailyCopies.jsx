@@ -1,15 +1,28 @@
 /* eslint-disable react/prop-types */
+import { motion } from 'motion/react'
 import React from 'react'
 import { FaRegFloppyDisk } from 'react-icons/fa6'
 
-
 const Items = ({ data, itemSave }) => {
     return (
-        <div className="bg-white rounded-[4px] m-1 p-2 gap-x-[2px] flex justify-stretch items-center">
-            <p className="text-[12px] font-bold mr-1 w-full line-clamp-3 overflow-ellipsis" >{data}</p>
-            <button onClick={() => itemSave(data)} className="bg-white rounded-full p-[4px] w-1/8">
-                <FaRegFloppyDisk className="text-black text-[20px] font-bold" />
-            </button>
+        <div className="">
+            <motion.div
+                onClick={() => itemSave(data)}
+                className='bg-white rounded-[4px] m-1 p-2 gap-x-[2px] flex justify-stretch items-center cursor-pointer'
+                whileHover={{
+                    scaleX: 0.95,
+                    scaleY: 0.9,
+                    transition: {
+                        duration: 0.3,
+                        ease: 'easeInOut'
+                    }
+                }}>
+                <p className="text-[12px] font-bold mr-1 w-full line-clamp-3 overflow-ellipsis" >{data}</p>
+                <button onClick={() => itemSave(data)} className="bg-white rounded-full p-[4px] w-1/8">
+                    <FaRegFloppyDisk className="text-black text-[20px] font-bold" />
+                </button>
+            </motion.div>
+
         </div>
     )
 }

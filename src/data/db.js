@@ -11,7 +11,6 @@ export async function readDB() {
     const raw = fs.readFileSync(dbPath, "utf-8");
     return JSON.parse(raw);
   } catch (error) {
-    console.error("Erro ao ler o JSON:", error);
     return { copies: [] };
   }
 }

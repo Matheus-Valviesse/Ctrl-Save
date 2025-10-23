@@ -7,7 +7,7 @@ import icon from '../../resources/icon.png?asset'
 import { GlobalKeyboardListener } from 'node-global-key-listener'
 import { getCopies, addCopy, editCopy, deleteCopy } from "../data/db.js";
 import { registerNotificationIPC } from './notification.js'
-
+import { showNotification } from './notifyWindow';
 ipcMain.handle("get-copies", () => getCopies());
 ipcMain.handle("add-copy", (_, item) => addCopy(item));
 ipcMain.handle("edit-copy", (_, { id, updated }) => editCopy(id, updated));
@@ -16,6 +16,7 @@ ipcMain.handle("delete-copy", (_, id) => deleteCopy(id));
 // Instância do listener global de teclado
 const keyboardListener = new GlobalKeyboardListener();
 let mainWindow
+let notifWin
 // Função para criar a janela principal do aplicativo
 function createWindow() {
   // Configurações da janela do navegador
@@ -104,9 +105,6 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  // Exemplo de comunicação IPC (teste)
-  ipcMain.on('ping', () => console.log('pong'));
-
   // Cria a janela principal
   createWindow();
   registerNotificationIPC();
@@ -131,7 +129,6 @@ ipcMain.handle('get-data', async (event, args) => {
 });
 
 ipcMain.on('data-copy', (event, args) => {
-  console.log(args);
 
   if (!args.text) return;
 
@@ -140,14 +137,33 @@ ipcMain.on('data-copy', (event, args) => {
 
   // Envia para o renderer, se a janela existir
   if (args.text) {
-    mainWindow.webContents.send('update-data', args.text);
-    // Envia para todas as janelas abertas
-    BrowserWindow.getAllWindows().forEach(win => {
-      win.webContents.send('update-data', args.text);
-    });
-    console.log('=========');
-    console.log('aqui');
-    console.log('=========');
+    function sendNotification(args) {
+      let notifWin = showNotification(); // função que cria ou retorna a janela existente
+
+      if (!notifWin || notifWin.isDestroyed()) return;
+
+      // Se a janela ainda está carregando
+      if (!notifWin.webContents.isLoading()) {
+        // já carregou, só envia a mensagem
+        notifWin.webContents.send('update-data', args);
+      } else {
+        // ainda está carregando, espera terminar
+        notifWin.webContents.once('did-finish-load', () => {
+          if (!notifWin.isDestroyed()) {
+            notifWin.webContents.send('update-data', args);
+          }
+        });
+      }
+
+      // Garante que a janela apareça
+      notifWin.showInactive();
+    }
+
+    sendNotification(args.text)
+
+
+
+
   }
 
 

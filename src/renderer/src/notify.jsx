@@ -1,4 +1,4 @@
-import './styles/index.css'
+import './styles/notifi.css'
 import ReactDOM from 'react-dom/client'
 import React from 'react'
 import NotifiMessage from './NotifiMessage'
