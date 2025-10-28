@@ -4,7 +4,7 @@ const PrimaryBtn = ({ selected, name, onClick }) => {
     return (
         <button
             data-select={name == selected}
-            className="font-medium text-[12px] w-full bg-white data-[select=true]:bg-black data-[select=true]:text-[#a5ff82] border-white border-b-[4px] data-[select=true]:border-[#a5ff82]"
+            className="font-medium text-[12px] w-full bg-[#262626]  data-[select=true]:text-[#05cd55] text-[#9c9c9c] border-[#9c9c9c]  border-b-[1px] data-[select=true]:border-[#05cd55]"
             onClick={() => onClick(name)}
         >
             {name}

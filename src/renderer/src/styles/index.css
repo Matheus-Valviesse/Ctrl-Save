@@ -19,3 +19,33 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
+
+.custom-scroll {
+  /* obrigar a usar o scroll custom */
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #05cd5580 transparent; /* Firefox (thumb) (track) */
+}
+
+/* Chrome / Edge / Safari */
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent; /* sem fundo */
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #05cd55; /* quando não estiver em uso */
+  border-radius: 4px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover,
+.custom-scroll::-webkit-scrollbar-thumb:active {
+  background: #05cd55; /* quando passar o mouse / pressionar / rolando */
+}
+
+.custom-scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}

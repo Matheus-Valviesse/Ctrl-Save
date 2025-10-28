@@ -6,7 +6,6 @@ body {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE e Edge */
   pointer-events: none;
-  background-color: #ef2121ff;
   width: 0;
 }
 

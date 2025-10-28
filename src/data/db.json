@@ -13,8 +13,134 @@
       "shortcut": "alt+1"
     },
     {
-      "id": 1761238961299,
-      "itemCopy": "https://www.youtube.com/watch?v=xUT3ZcbVWmQ&list=RD8F7Q-4PZCjA&index=2",
+      "id": 1761598284977,
+      "itemCopy": "odeAnimar) setPodeAnimar(true);\r\n  }}\r\n  onHoverEnd={() => setPodeAnimar(false)}\r\n  animate={podeAnimar ? {\r\n    scaleX: 0.95,\r\n    scaleY: 0.9",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761598287310,
+      "itemCopy": "height: 0,",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761598289727,
+      "itemCopy": "/* eslint-disable react/prop-types */\r\nimport { motion, useAnimation } from 'motion/react'\r\nimport React from 'react'\r\nimport { FaRegFloppyDisk } from 'react-icons/fa6'\r\n\r\nconst Items = ({ data, itemSave }) => {\r\n    let anim = false\r\n    const fadeControl = useAnimation()\r\n    const boxControl = useAnimation()\r\n\r\n    const closeItem = async (data) => {\r\n        anim = true\r\n        await boxControl.start({ scale: 1.02, transition: { duration: 0.15, ease: \"easeInOut\" } })\r\n        await fadeControl.start({ opacity: 0, transition: { duration: 0.35, ease: \"easeInOut\" } })\r\n        await boxControl.start({ scaleY: 0, transition: { duration: 0.45, ease: \"easeInOut\" } })\r\n        // itemSave(data)\r\n    }\r\n\r\n    return (\r\n        <motion.div animate={boxControl} className=\"\">\r\n            <motion.div\r\n                animate={boxControl}\r\n                onClick={() => closeItem(data)}\r\n                className='bg-[#fffffffe] rounded-[8px] m-2 p-[10px] gap-x-[2px] flex justify-stretch items-center cursor-pointer'\r\n                whileHover={!anim ? {\r\n                    scaleX: 0.95,\r\n                    scaleY: 0.9,\r\n                    transition: {\r\n                        duration: 0.3,\r\n                        ease: 'easeInOut'\r\n                    }\r\n                } : null}>\r\n                <motion.p animate={fadeControl} className=\"text-[14px] font-normal mr-1 w-full line-clamp-3 overflow-ellipsis\" >{data}</motion.p>\r\n                <motion.button animate={fadeControl} onClick={() => closeItem(data)} className=\" rounded-full p-[4px] w-1/8\">\r\n                    <FaRegFloppyDisk className=\"text-black text-[20px] font-bold\" />\r\n                </motion.button>\r\n            </motion.div>\r\n\r\n        </motion.div>\r\n    )\r\n}\r\nconst DailyCopies = ({ itensCopy, itemSave }) => {\r\n\r\n\r\n    return itensCopy?.length > 0 ? (\r\n        <div className=\" rounded-[4px]\">\r\n            {itensCopy.map((itemProp, index) => (\r\n                <Items data={itemProp} key={itemProp + index} itemSave={itemSave} />\r\n            ))}\r\n        </div>\r\n    ) : (\r\n        <h1 className=\"flex items-center justify-center h-full text-center\">Nada foi copiado.</h1>\r\n    )\r\n}\r\n\r\nexport default DailyCopies\r\n",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761598327488,
+      "itemCopy": "await boxControl.start({ scaleY: 0, height: 0, transition: { duration: 0.45, ease: \"easeInOut\" } })",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761598787987,
+      "itemCopy": "await boxControl.start({ scaleY: 0, height: 0, transition: { duration: 0.45, ease: \"easeInOut\" } })",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761598794064,
+      "itemCopy": "height: 0,",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761598797183,
+      "itemCopy": " margin: 0, padding: 0,",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761598799051,
+      "itemCopy": "gap:0,",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761598812705,
+      "itemCopy": "* eslint-disable react/prop-types */ import { motion, useAnimation } from",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761599064425,
+      "itemCopy": "/* eslint-disable react/prop-types */\r\nimport { motion, useAnimation } from 'motion/react'\r\nimport React from 'react'\r\nimport { FaRegFloppyDisk } from 'react-icons/fa6'\r\n\r\nconst Items = ({ data, itemSave }) => {\r\n    let anim = false\r\n    const fadeControl = useAnimation()\r\n    const boxControl = useAnimation()\r\n\r\n    const closeItem = async (data) => {\r\n        anim = true\r\n        await fadeControl.start({ opacity: 0, transition: { duration: 0.35, ease: \"easeInOut\" } })\r\n        await boxControl.start({ scaleY: 0, transition: { duration: 0.45, ease: \"easeInOut\" } })\r\n        await boxControl.start({ height: 0, margin: 0, padding: 0, gap: 0, transition: { duration: 0.2, ease: \"easeInOut\" } })\r\n        await fadeControl.start({ width: 0, height: 0, margin: 0, padding: 0, gap: 0, transition: { duration: 0.0001, ease: \"easeInOut\" } })\r\n        // itemSave(data)\r\n    }\r\n\r\n    return (\r\n        <motion.div animate={boxControl} className=\"\">\r\n            <motion.div\r\n                animate={boxControl}\r\n                onClick={() => closeItem(data)}\r\n                className='bg-[#fffffffe] rounded-[8px] m-2 p-[10px] gap-x-[2px] flex justify-stretch items-center cursor-pointer'\r\n                whileHover={!anim ? {\r\n                    scaleX: 0.95,\r\n                    scaleY: 0.9,\r\n                    transition: {\r\n                        duration: 0.3,\r\n                        ease: 'easeInOut'\r\n                    }\r\n                } : null}>\r\n                <motion.p animate={fadeControl} className=\"text-[14px] font-normal mr-1 w-full line-clamp-3 overflow-ellipsis\" >{data}</motion.p>\r\n                {/* <motion.button animate={fadeControl} onClick={() => closeItem(data)} className=\" rounded-full p-[4px] w-1/8\">\r\n                    <FaRegFloppyDisk className=\"text-black text-[20px] font-bold\" />\r\n                </motion.button> */}\r\n            </motion.div>\r\n\r\n        </motion.div>\r\n    )\r\n}\r\nconst DailyCopies = ({ itensCopy, itemSave }) => {\r\n\r\n\r\n    return itensCopy?.length > 0 ? (\r\n        <div className=\" rounded-[4px]\">\r\n            {itensCopy.map((itemProp, index) => (\r\n                <Items data={itemProp} key={itemProp + index} itemSave={itemSave} />\r\n            ))}\r\n        </div>\r\n    ) : (\r\n        <h1 className=\"flex items-center justify-center h-full text-center\">Nada foi copiado.</h1>\r\n    )\r\n}\r\n\r\nexport default DailyCopies\r\n",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761599121285,
+      "itemCopy": "margin: 0",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761599124264,
+      "itemCopy": "wait boxControl.start({ scaleY: 0, height: 0, transition: { duration: 0.45, ease: \"easeInOut\" } })\r\n\r\n\r\n\r\n-\r\n\r\nawait boxControl.start(",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761599131404,
+      "itemCopy": "/* eslint-disable react/prop-types */ import { motion,",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761599135641,
+      "itemCopy": "await fadeControl.start({ opacity: 0, transition: { duration: 0.35, ease: \"easeInOut\" } })",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761599166019,
+      "itemCopy": " boxControl.set({ display: \"none\" })",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761599797439,
+      "itemCopy": "odeAnimar) setPodeAnimar(true); }} onHoverEnd={() => setPodeAnimar(false)} animate={podeAnimar ? { scaleX: 0.95, scaleY: 0.9\r\n\r\n\r\n\r\n-\r\n\r\nheight: 0,",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761599800987,
+      "itemCopy": "await boxControl.start({ scaleY: 0, height: 0, transition: { duratio",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761599815690,
+      "itemCopy": "/* eslint-disable react/prop-types */ import { motion, useAnimation } from 'motion/react' import React from 'react' import { FaRegFloppyDisk } from 'react-icons/fa6' const Items = ({ data, itemSave }) => { let anim = false const fadeControl = useAnimation() const boxControl = useAnimation() const closeItem = async (data) => { anim = true await boxControl.start({ scale: 1.02, transition: { duration: 0.15, ease: \"easeInOut\" } }) await fadeControl.start({ opacity: 0, transition: { duration: 0.35, ease: \"easeInOut\" } }) await boxControl.start({ scaleY: 0, transition: { duration: 0.45, ease: \"easeInOut\" } }) // itemSave(data) } return ( <motion.div animate={boxControl} className=\"\"> <motion.div animate={boxControl} onClick={() => closeItem(data)} className='bg-[#fffffffe] rounded-[8px] m-2 p-[10px] gap-x-[2px] flex justify-stretch items-center cursor-pointer' whileHover={!anim ? { scaleX: 0.95, scaleY: 0.9, transition: { duration: 0.3, ease: 'easeInOut' } } : null}> <motion.p animate={fadeControl} className=\"text-[14px] font-normal mr-1 w-full line-clamp-3 overflow-ellipsis\" >{data}</motion.p> <motion.button animate={fadeControl} onClick={() => closeItem(data)} className=\" rounded-full p-[4px] w-1/8\"> <FaRegFloppyDisk className=\"text-black text-[20px] font-bold\" /> </motion.button> </motion.div> </motion.div> ) } const DailyCopies = ({ itensCopy, itemSave }) => { return itensCopy?.length > 0 ? ( <div className=\" rounded-[4px]\"> {itensCopy.map((itemProp, index) => ( <Items data={itemProp} key={itemProp + index} itemSave={itemSave} /> ))} </div> ) : ( <h1 className=\"flex items-center justify-center h-full text-center\">Nada foi copiado.</h1> ) } export default DailyCopies\r\n\r\n\r\n\r\n-",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761599861646,
+      "itemCopy": "height: 0,",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761600092809,
+      "itemCopy": "odeAnimar) setPodeAnimar(true); }} onHoverEnd={(",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761600097962,
+      "itemCopy": "1\r\nhttps://www.linkedin.com/in/matheus-valviesse-de",
+      "tag": "",
+      "shortcut": ""
+    },
+    {
+      "id": 1761600187256,
+      "itemCopy": "Nada foi copiad",
       "tag": "",
       "shortcut": ""
     }

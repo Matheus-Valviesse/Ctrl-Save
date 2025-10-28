@@ -12,6 +12,10 @@ const NotifiMessage = () => {
 
   let currentText = null // variável para comparar o texto atual
 
+  function onClosed() {
+    window.electronAPI.closeNotifi()
+  };
+
   const startAnimationBar = async () => {
 
     animControl.stop()
@@ -57,6 +61,8 @@ const NotifiMessage = () => {
     })
     currentText = null
     if (textRef.current) textRef.current.innerText = ""
+
+    onClosed()
   }
 
   const fadeAnimationText = async (novoTexto) => {
@@ -104,10 +110,10 @@ const NotifiMessage = () => {
 
   return ReactDOM.createPortal(
     (
-      <motion.div animate={divControl} style={{ width: 0, originX: 1 }} className='overflow-x-hidden  scrollbar-none h-[110px] flex flex-col bg-[#ef17173e] absolute right-0'>
+      <motion.div animate={divControl} style={{ width: 0, originX: 1 }} className='overflow-x-hidden  scrollbar-none h-[110px] flex flex-col absolute right-0'>
         <motion.div
           animate={boxControl}
-          className='border-r-0 bg-[#000] p-4 text-white absolute flex flex-col gap-2 overflow-hidden translate-x-[380px] w-full h-full scrollbar-none'
+          className='border-r-0 bg-[#262626] p-4 text-white absolute flex flex-col gap-2 overflow-hidden translate-x-[380px] w-full h-full scrollbar-none'
         >
           <h3 className='flex flex-row items-center gap-1 font-medium text-[16px]'>
             <IoCopySharp /> texto copiado

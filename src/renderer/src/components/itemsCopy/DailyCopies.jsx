@@ -1,42 +1,52 @@
-/* eslint-disable react/prop-types */
-import { motion } from 'motion/react'
-import React from 'react'
-import { FaRegFloppyDisk } from 'react-icons/fa6'
-
-const Items = ({ data, itemSave }) => {
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { nanoid } from "nanoid";
+// Componente do item
+const Item = ({ data, onRemove }) => {
     return (
-        <div className="">
-            <motion.div
-                onClick={() => itemSave(data)}
-                className='bg-white rounded-[4px] m-1 p-2 gap-x-[2px] flex justify-stretch items-center cursor-pointer'
-                whileHover={{
-                    scaleX: 0.95,
-                    scaleY: 0.9,
-                    transition: {
-                        duration: 0.3,
-                        ease: 'easeInOut'
-                    }
-                }}>
-                <p className="text-[12px] font-bold mr-1 w-full line-clamp-3 overflow-ellipsis" >{data}</p>
-                <button onClick={() => itemSave(data)} className="bg-white rounded-full p-[4px] w-1/8">
-                    <FaRegFloppyDisk className="text-black text-[20px] font-bold" />
-                </button>
-            </motion.div>
+        <motion.div
+            layout
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{
+                opacity: 0,
+                scale: 0.9,
+                height: 0,
+                margin: 0,
+                padding: 0,
+                transition: { duration: 0.3, ease: "easeInOut" },
+            }}
+            transition={{ duration: 0.3 }}
+            className="overflow-hidden bg-[#fffffffe] rounded-[8px] p-[10px] flex items-center cursor-pointer"
+            onClick={() => onRemove(data)}
+        >
+            <p className="w-full text-[14px]">{data}</p>
+        </motion.div>
+    );
+};
 
-        </div>
-    )
-}
-const DailyCopies = ({ itensCopy, itemSave }) => {
+// Componente pai
+const DailyCopies = ({ itensCopy = [] }) => {
+    const [itens, setItens] = useState(itensCopy.map((item) => ({ id: nanoid(), value: item })));
 
-    return itensCopy?.length > 0 ? (
-        <div className=" rounded-[4px]">
-            {itensCopy.map((itemProp, index) => (
-                <Items data={itemProp} key={itemProp + index} itemSave={itemSave} />
-            ))}
-        </div>
+    const removeItem = (itemToRemove) => {
+        console.log(itemToRemove)
+        setItens((prev) => prev.filter((i) => i.id !== itemToRemove));
+    };
+
+    return itens.length > 0 ? (
+        <motion.div layout className="flex flex-col gap-2 p-2">
+            <AnimatePresence>
+                {itens.map((item) => (
+                    <Item key={item.id} data={item.value} onRemove={() => removeItem(item.id)} />
+                ))}
+            </AnimatePresence>
+        </motion.div>
     ) : (
-        <h1 className="flex items-center justify-center h-full text-center">Nada foi copiado.</h1>
-    )
-}
+        <h1 className="flex items-center justify-center h-full text-center">
+            Nada foi copiado.
+        </h1>
+    );
+};
 
-export default DailyCopies
+export default DailyCopies;

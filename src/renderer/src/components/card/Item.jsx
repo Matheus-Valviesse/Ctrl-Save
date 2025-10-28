@@ -5,13 +5,13 @@ import { IoClose } from "react-icons/io5";
 
 const Item = ({ data, id, setItemInfo, setModal, setModalDelete }) => {
   return (
-    <div className="bg-white rounded-[4px] mx-1 my-[6px] px-2 py-1 flex justify-stretch gap-[2px] items-center">
+    <div className="bg-[#fffffffe] rounded-[8px] m-2 p-[10px] gap-x-[2px] flex justify-stretch items-center cursor-pointer">
       {data?.shortcut !== "" ? <div className='mr-[2px] relative flex justify-center'>
         <BsFillClipboard2Fill className='text-black  text-[20px]' />
         <p className='font-semibold text-[12px] text-[#baf1b5] absolute mt-[2px]'>{data.shortcut.replace("alt+", "")}</p>
       </div> : null}
 
-      <p className="text-[11px] font-bold mr-4 overflow-ellipsis line-clamp-2 break-words text-pretty w-full leading-[13px]">
+      <p className="text-[14px] font-normalmr-4 overflow-ellipsis line-clamp-2 break-words text-pretty w-full leading-[13px]">
         {data?.itemCopy}
       </p>
 
@@ -38,7 +38,7 @@ const Item = ({ data, id, setItemInfo, setModal, setModalDelete }) => {
 
 
         </div>
-        <p className="text-[10px] font-bold bg-[#baf1b5] px-[4px] py-[1px] rounded-sm w-[52px] line-clamp-1 text-center overflow-ellipsis">
+        <p className="text-[12px] font-normal bg-[#90f088] px-[4px] py-[1px] rounded-sm w-[60px] line-clamp-1 text-center overflow-ellipsis">
           {data?.tag || '-'}
         </p>
 

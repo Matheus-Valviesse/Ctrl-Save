@@ -21,7 +21,7 @@ const CopiesSaved = ({ itensSaved, editLocal, deleteLocal }) => {
 
     return (
         <div>
-            <div className="bg-white rounded-t-[4px] mx-1 my-[6px] p-2 flex items-center">
+            <div className="bg-[#262626] rounded-t-[4px] mx-1 my-[6px] p-1 flex items-center">
                 <input
                     className="border-2 border-[#5c5c5c] focus:outline focus:outline-0 focus:border-[#8ee786] rounded-md w-full px-2 py-1 text-[14px] font-normal"
                     placeholder="Digite pelo texto ou tag"

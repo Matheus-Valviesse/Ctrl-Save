@@ -20,6 +20,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   },
 
   showMessage: () => ipcRenderer.send("show-message"),
+  closeNotifi: () => ipcRenderer.send("close-notifi"),
   onUpdateData: (callback) => ipcRenderer.on('update-data', (_, data) => callback(data))
 
 })

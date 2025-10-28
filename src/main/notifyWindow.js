@@ -1,4 +1,4 @@
-import { BrowserWindow, screen } from 'electron'
+import { BrowserWindow, ipcMain, screen } from 'electron'
 import path, { join } from 'path'
 import { fileURLToPath } from 'url'
 
@@ -56,5 +56,9 @@ export function showNotification() {
     notificationWindow = null;
   });
 
+  ipcMain.on("close-notifi", () => {
+    console.log('aqui oh ')
+    if (notificationWindow) notificationWindow.close()
+  })
   return notificationWindow;
 }

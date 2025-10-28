@@ -25,7 +25,6 @@ function App() {
   }
 
   async function saveLocal(item) {
-    console.log(item)
     const newItem = await window.electronAPI.addCopy(item);
     setTextSaved(prev => [...prev, newItem]); // atualiza o state no React
     const copyExist = textCopy.findIndex(i => i === item)
@@ -61,12 +60,11 @@ function App() {
   if (textSaved.length > 0) {
     window?.electronAPI?.onCopyByPath((event, message) => {
       const data = textSaved
-      console.log(data)
       const i = data.findIndex(item => item.shortcut == message)
 
-      console.log(i)
       if (i !== -1) {
         window?.electronAPI.sendCopy("data-copy", { text: textSaved[i].itemCopy })
+        console.log('aquiiii')
       }
     })
   }
@@ -75,7 +73,7 @@ function App() {
 
 
   return (
-    <div className="h-screen bg-[#d1d1d1] flex flex-col">
+    <div className="h-screen bg-[#262626] flex flex-col custom-scroll">
       <HeaderBtns btnSelect={btnSelect} setBtnSelect={setBtnSelect} />
       <div className="h-full overflow-y-auto">
         {copyPage[btnSelect]}
