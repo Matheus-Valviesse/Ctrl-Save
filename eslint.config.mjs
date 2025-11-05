@@ -9,5 +9,17 @@ export default [
   { languageOptions: { globals: globals.browser } },
   pluginJs.configs.recommended,
   pluginReact.configs.flat.recommended,
+  {
+    env: {
+      browser: true,
+      node: true, // <-- adiciona isso
+      es2021: true,
+    }
+  },
+  {
+    "rules": {
+      "react/prop-types": "off"
+    }
+  }
 
 ];
