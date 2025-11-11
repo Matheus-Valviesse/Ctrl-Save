@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import HeaderBtns from './components/HeaderBtns'
 import DailyCopies from './components/itemsCopy/DailyCopies'
 import CopiesSaved from './components/itemsCopy/CopiesSaved'
-
+import { nanoid } from "nanoid";
 function App() {
   const [textCopy, setTextCopy] = useState([])
   const [textSaved, setTextSaved] = useState([]) // começa vazio
@@ -64,7 +64,6 @@ function App() {
 
       if (i !== -1) {
         window?.electronAPI.sendCopy("data-copy", { text: textSaved[i].itemCopy })
-        console.log('aquiiii')
       }
     })
   }

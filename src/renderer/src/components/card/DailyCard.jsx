@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from "framer-motion";
-
+import { GiSaveArrow } from "react-icons/gi";
 const DailyCard = ({ data, onRemove }) => {
   return (
 
@@ -17,12 +17,20 @@ const DailyCard = ({ data, onRemove }) => {
         transition: { delay: 0.3, duration: 0.3, ease: "easeInOut" },
       }}
       transition={{ duration: 0.3 }}
-      className="overflow-hidden bg-[#333833] rounded-[8px] p-[10px] flex items-center cursor-pointer"
+      className="overflow-hidden bg-[#333833] rounded-[8px] p-[10px] flex  items-center cursor-pointer "
       onClick={() => onRemove(data)}
     >
-      <motion.div className="flex flex-row" exit={{ opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } }}>
-        <p className="w-full text-[14px] text-[#ddf1dd]">{data}</p>
+      <motion.div
+        className="flex flex-row justify-between items-center p-2 w-full"
+        exit={{ opacity: 0, transition: { duration: 0.3, ease: 'easeInOut' } }}
+      >
+        <p className=" w-7/9 text-[14px] text-[#ddf1dd] line-clamp-2 overflow-hidden text-ellipsis  ">
+          {data}
+        </p>
+        <GiSaveArrow className="flex-shrink-0 ml-2 text-[#ddf1dd]" />
       </motion.div>
+
+
     </motion.div>
   )
 };
