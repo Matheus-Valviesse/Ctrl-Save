@@ -9,7 +9,7 @@ const ModalDelete = ({ modal, setModal, itemInfo, deleteLocal }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 ">
 
-      <div className='bg-white w-[80vw] h-[12rem] rounded px-4 py-6 relative flex flex-col justify-between'>
+      <div className='bg-[#333833] w-[80vw] h-[12rem] rounded px-4 py-6 relative flex flex-col justify-between'>
 
 
         <div className=' flex absolute top-0 right-0 mr-2 mt-2'>

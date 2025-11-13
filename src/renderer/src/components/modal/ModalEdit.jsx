@@ -35,7 +35,7 @@ function Modal({ modal, setModal, itemInfo, editLocal }) {
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 ">
-            <div className="bg-white w-[270px]  rounded shadow-lg px-4 py-4 flex flex-col gap-2 relative">
+            <div className="bg-[#333833] w-[270px]  rounded shadow-lg px-4 py-4 flex flex-col gap-2 relative text-[#ddf1dd]">
                 <div className=' flex  absolute top-0 right-0 mr-2 mt-2'>
                     <button onClick={() => setModal(false)}>
                         <IoCloseSharp className="text-black text-[24px] font-bold" />
@@ -47,7 +47,7 @@ function Modal({ modal, setModal, itemInfo, editLocal }) {
                     <textarea
                         value={copyValue}
                         onChange={(e) => setCopyValue(e.target.value)}
-                        className="border-2 rounded-md w-full h-[100px] px-2 py-1 resize-none bg-[#fafafa]"
+                        className="border-2 rounded-md w-full h-[100px] px-2 py-1 resize-none bg-transparent text-[14px] text-[#ddf1dd98]"
                         style={{ wordWrap: 'break-word', overflowWrap: 'break-word' }}
                     />
                 </label>
@@ -58,14 +58,14 @@ function Modal({ modal, setModal, itemInfo, editLocal }) {
                         <input
                             value={tagValue}
                             onChange={(e) => setTagValue(e.target.value)}
-                            className="border-2 rounded-md w-full px-1 h-7"
+                            className="border-2 rounded-md w-full px-1 h-7 bg-transparent text-[14px] text-[#ddf1dd98]"
                         />
                     </label>
 
                     <label className="flex flex-col w-1/2 justify-between">
                         Tecla de copia via atalho
                         <select
-                            className="border-2 rounded-md w-full px-1 h-7"
+                            className="border-2 rounded-md w-full px-1 h-7 bg-transparent text-[14px] text-[#ddf1dd98]"
                             value={selectedKey}
                             onChange={(e) => setSelectedKey(e.target.value)}
                         >
