@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { IoCloseSharp } from "react-icons/io5";
-// 1. Importamos os componentes do framer-motion
 import { motion, AnimatePresence } from "framer-motion";
 
 function Modal({ modal, setModal, itemInfo, editLocal }) {
@@ -32,46 +31,47 @@ function Modal({ modal, setModal, itemInfo, editLocal }) {
         { key: 'alt+9', assigned: false }
     ];
 
-    // Removi o "if (modal === false) return null" daqui para permitir a animação de saída (exit)
-    // A lógica agora fica dentro do AnimatePresence abaixo
-
     return (
         <AnimatePresence>
             {modal && (
                 <motion.div
                     key="modal-backdrop"
-                    // ANIMAÇÃO DO FUNDO PRETO
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5 }} // Fundo demora um pouco para aparecer
+                    transition={{ duration: 0.5 }}
                     className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50"
-                    onClick={() => setModal(false)} // Opcional: Fechar ao clicar fora
+                    onClick={() => setModal(false)}
                 >
                     <motion.div
                         key="modal-box"
-                        // ANIMAÇÃO DO BOX (SCALE)
                         initial={{ scale: 0.8, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         exit={{ scale: 0.8, opacity: 0 }}
-                        transition={{ duration: 0.3, ease: "easeOut" }} // Rápido mas suave
-                        className="bg-[#333833] w-[270px] rounded shadow-lg px-4 py-4 flex flex-col gap-2 relative text-[#ddf1dd]"
-                        onClick={(e) => e.stopPropagation()} // Impede que o clique no modal feche ele (se tiver clique no fundo)
+                        transition={{ duration: 0.3, ease: "easeOut" }}
+
+                        // CORREÇÃO 1: Removi px-4, py-4, flex e gap-2 daqui.
+                        // Adicionei overflow-hidden para cortar qualquer sub-pixel vazando.
+                        className="bg-[#333833] w-[270px] rounded shadow-lg relative text-[#ddf1dd] overflow-hidden"
+
+                        // CORREÇÃO 2: Forçar renderização via GPU para evitar a tremida final
+                        style={{ willChange: 'transform' }}
+
+                        onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Botão de fechar */}
-                        <div className='flex absolute top-0 right-0 mr-2 mt-2'>
+                        {/* Botão de fechar (mantido aqui pois é absoluto, mas adicionei z-10 para garantir que fique sobre o conteúdo) */}
+                        <div className='flex absolute top-0 right-0 mr-2 mt-2 z-10'>
                             <button onClick={() => setModal(false)}>
                                 <IoCloseSharp className="text-[24px] text-[#ddf1dd] font-bold" />
                             </button>
                         </div>
 
-                        {/* ANIMAÇÃO DO CONTEÚDO 
-                            Aqui está o segredo: delay de 0.3s (igual ao tempo do scale acima)
-                        */}
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.3, duration: 0.3 }}
+                            // CORREÇÃO 3: O layout interno (padding, flex, gap) veio para cá
+                            className="px-4 py-4 flex flex-col gap-2 h-full w-full"
                         >
                             <label className='flex flex-col mt-4'>
                                 Texto copiado
