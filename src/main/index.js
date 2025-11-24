@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
-
+import fs from "fs";
+import iconPath from '../../resources/icon.png?asset'
 import { app, shell, BrowserWindow, ipcMain, clipboard, globalShortcut } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
@@ -16,7 +17,7 @@ ipcMain.handle("delete-copy", (_, id) => deleteCopy(id));
 // Instância do listener global de teclado
 const keyboardListener = new GlobalKeyboardListener();
 let mainWindow
-let notifWin
+
 // Função para criar a janela principal do aplicativo
 function createWindow() {
   // Configurações da janela do navegador
@@ -24,11 +25,12 @@ function createWindow() {
     width: 300,
     height: 600,
     show: false,
+    title: 'Ctrl Save',
+    icon: iconPath,
     autoHideMenuBar: true,
     resizable: false, // 🚫 Não permite aumentar/diminuir pelas bordas
     fullscreenable: false, // 🚫 Não permite fullscreen (opcional)
     maximizable: false,    // 🚫 Não permite maximizar (opcional)
-    ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'), // Carrega o script preload
       sandbox: false

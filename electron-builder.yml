@@ -1,32 +1,43 @@
 appId: com.electron.app
-productName: test
+
+productName: 'Ctrl Save'
+
 directories:
   buildResources: build
+
 files:
   - '!**/.vscode/*'
   - '!src/*'
   - '!electron.vite.config.{js,ts,mjs,cjs}'
   - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
+
 asarUnpack:
   - resources/**
+
 win:
-  executableName: test
+  icon: 'src/main/resources/icon.ico'
+  executableName: ctrl-save
+  sign: false
+  signAndEditExecutable: false
+  signingHashAlgorithms: []
+  certificateSubjectName: ''
+  rfc3161TimeStampServer: '' # nome correto
+
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
+  oneClick: false
+  perMachine: false
+
 mac:
-  entitlementsInherit: build/entitlements.mac.plist
-  extendInfo:
-    - NSCameraUsageDescription: Application requests access to the device's camera.
-    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
-    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
-    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+  target: []
+  hardenedRuntime: false
+  gatekeeperAssess: false
   notarize: false
-dmg:
-  artifactName: ${name}-${version}.${ext}
+
 linux:
   target:
     - AppImage
@@ -34,11 +45,16 @@ linux:
     - deb
   maintainer: electronjs.org
   category: Utility
+
 appImage:
   artifactName: ${name}-${version}.${ext}
+
 npmRebuild: false
+buildDependenciesFromSource: true
+
 publish:
   provider: generic
   url: https://example.com/auto-updates
+
 electronDownload:
   mirror: https://npmmirror.com/mirrors/electron/

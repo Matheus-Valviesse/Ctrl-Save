@@ -1,22 +1,3 @@
 {
-  "copies": [
-    {
-      "id": 1759525789831,
-      "itemCopy": "Matheus B Valviesse\n",
-      "tag": "curriculo",
-      "shortcut": "alt+2"
-    },
-    {
-      "id": 1759526058887,
-      "itemCopy": "https://www.linkedin.com/in/matheus-valviesse-dev/",
-      "tag": "curriculo",
-      "shortcut": "alt+1"
-    },
-    {
-      "id": 1763051666937,
-      "itemCopy": "https://www.youtube.com/watch?v=bXdlNrZj8uU",
-      "tag": "",
-      "shortcut": "alt+0"
-    }
-  ]
+  "copies": []
 }

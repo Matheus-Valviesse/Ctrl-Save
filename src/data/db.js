@@ -1,5 +1,8 @@
 import fs from "fs";
-const dbPath = "src/data/db.json"
+import path from "path";
+import { app } from "electron";
+
+const dbPath = path.join(app.getPath("userData"), "db.json");
 
 export async function readDB() {
   if (!fs.existsSync(dbPath)) {
@@ -7,10 +10,12 @@ export async function readDB() {
     fs.writeFileSync(dbPath, JSON.stringify(initialData, null, 2));
     return initialData;
   }
+
   try {
     const raw = fs.readFileSync(dbPath, "utf-8");
     return JSON.parse(raw);
   } catch (error) {
+    console.error("Erro ao ler DB:", error);
     return { copies: [] };
   }
 }
@@ -25,7 +30,7 @@ export async function getCopies() {
 }
 
 export async function addCopy(item) {
-  const db = await readDB();  // <-- usar await aqui
+  const db = await readDB();
   const newItem = { id: Date.now(), itemCopy: item, tag: '', shortcut: '' };
   db.copies.push(newItem);
   writeDB(db);
@@ -33,18 +38,18 @@ export async function addCopy(item) {
 }
 
 export async function editCopy(id, updatedItem) {
-  const db = await readDB();  // <-- usar await aqui
+  const db = await readDB();
   const existItem = db.copies.findIndex(
     item => item.itemCopy !== updatedItem.itemCopy && item.shortcut === updatedItem.shortcut
   );
-  if (existItem !== -1) db.copies[existItem].shortcut = ""
-  db.copies = db.copies.map(c => c.id === id ? { ...c, ...updatedItem } : c);
+  if (existItem !== -1) db.copies[existItem].shortcut = "";
+  db.copies = db.copies.map(c => (c.id === id ? { ...c, ...updatedItem } : c));
   writeDB(db);
   return { success: true };
 }
 
 export async function deleteCopy(id) {
-  const db = await readDB();  // <-- usar await aqui
+  const db = await readDB();
   db.copies = db.copies.filter(c => c.id !== id);
   writeDB(db);
   return { success: true };

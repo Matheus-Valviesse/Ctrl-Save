@@ -1,13 +1,20 @@
-import { resolve } from 'path'
+import { join, resolve } from 'path'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import react from '@vitejs/plugin-react'
+import removeConsole from 'vite-plugin-remove-console'
 
 export default defineConfig({
   css: {
     postcss: './postcss.config.cjs', // Certifique-se de ter o arquivo PostCSS configurado.
   },
   main: {
-    plugins: [externalizeDepsPlugin()]
+    plugins: [externalizeDepsPlugin()],
+    assets: [
+      {
+        from: join(__dirname, "src/main/resources"),
+        to: "resources"
+      }
+    ]
   },
   preload: {
     plugins: [externalizeDepsPlugin()]
@@ -26,7 +33,7 @@ export default defineConfig({
         '@renderer': resolve('src/renderer/src')
       }
     },
-    plugins: [react()]
+    plugins: [react(), removeConsole()]
   },
   resolve: {
     alias: {

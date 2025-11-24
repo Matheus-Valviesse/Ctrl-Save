@@ -4,3 +4,7 @@ out
 .DS_Store
 *.log*
 db.js
+dist/
+build/
+out/
+release/

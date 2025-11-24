@@ -21,7 +21,7 @@ const CopiesSaved = ({ itensSaved, editLocal, deleteLocal }) => {
     );
 
     return (
-        <div>
+        <div className='overflow-hidden flex flex-col relative h-full'>
             <div className="bg-[#262626] rounded-t-[4px] mx-1 my-[6px] p-1 flex items-center">
                 <input
                     className="border-2 border-[#5c5c5c] bg-[#333833] focus:outline focus:outline-0 focus:border-[#8ee786] rounded-md w-full px-2 py-1 text-[14px] font-normal text-[#ddf1dd]"
@@ -55,9 +55,9 @@ const CopiesSaved = ({ itensSaved, editLocal, deleteLocal }) => {
                 ) : (
                     <motion.h1
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: 1, transition: { delay: 0.45, duration: 0.2, ease: easeInOut } }}
+                        animate={{ opacity: 1, transition: { delay: 0.45, duration: 0.2, ease: 'easeInOut' } }}
                         exit={{ opacity: 0 }}
-                        className="flex items-center justify-center  h-[90vh]  text-center absolute inset-0 text-[22px] text-[#cfcfcf]"
+                        className="flex items-center justify-center h-full text-center  inset-0 text-[22px] text-[#cfcfcf] "
                     >
                         Nada foi salvo.
                     </motion.h1>

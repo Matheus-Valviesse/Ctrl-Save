@@ -22,19 +22,16 @@ const ModalDelete = ({ modal, setModal, itemInfo, deleteLocal }) => {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            // CORREÇÃO 1: Removi 'px-4 py-6' daqui e adicionei 'overflow-hidden'
-            // Isso garante que o box externo cuide apenas do tamanho/scale
+        
             className='bg-[#333833] w-[80vw] h-[12rem] rounded relative overflow-hidden'
 
-            // CORREÇÃO 2: 'willChange' avisa o navegador para manter a otimização
+       
             style={{ willChange: 'transform' }}
 
             onClick={(e) => e.stopPropagation()}
           >
 
-            {/* CORREÇÃO 3: O padding (px-4 py-6) e w-full vieram para cá.
-                Agora o conteúdo interno tem espaço fixo e não briga com a borda do pai durante o zoom.
-            */}
+         
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

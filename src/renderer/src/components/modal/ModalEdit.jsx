@@ -59,7 +59,7 @@ function Modal({ modal, setModal, itemInfo, editLocal }) {
 
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Botão de fechar (mantido aqui pois é absoluto, mas adicionei z-10 para garantir que fique sobre o conteúdo) */}
+              
                         <div className='flex absolute top-0 right-0 mr-2 mt-2 z-10'>
                             <button onClick={() => setModal(false)}>
                                 <IoCloseSharp className="text-[24px] text-[#ddf1dd] font-bold" />
